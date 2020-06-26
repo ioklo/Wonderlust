@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonderlust.WPF", "Wonderlust.WPF\Wonderlust.WPF.csproj", "{E76C7A30-3BA9-42C9-AEB2-69D9A8F0DA08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonderlust.Core", "Wonderlust.Core\Wonderlust.Core.csproj", "{15CED997-42E4-401A-83C7-53A1AFE7866F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonderlust.App", "Wonderlust.App\Wonderlust.App.csproj", "{7E9343B0-3573-4326-8456-F63111DE0789}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E9692AB-ADDA-4FD4-97A4-BD195869A25A}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.Props = Directory.Build.Props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E76C7A30-3BA9-42C9-AEB2-69D9A8F0DA08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E76C7A30-3BA9-42C9-AEB2-69D9A8F0DA08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E76C7A30-3BA9-42C9-AEB2-69D9A8F0DA08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E76C7A30-3BA9-42C9-AEB2-69D9A8F0DA08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15CED997-42E4-401A-83C7-53A1AFE7866F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15CED997-42E4-401A-83C7-53A1AFE7866F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15CED997-42E4-401A-83C7-53A1AFE7866F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15CED997-42E4-401A-83C7-53A1AFE7866F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E9343B0-3573-4326-8456-F63111DE0789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E9343B0-3573-4326-8456-F63111DE0789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E9343B0-3573-4326-8456-F63111DE0789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E9343B0-3573-4326-8456-F63111DE0789}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D05B0D7F-F60B-40A5-BFAB-CC8A1BA375B6}
+	EndGlobalSection
+EndGlobal

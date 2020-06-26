@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Wonderlust.WPF.Views.ItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Wonderlust.WPF"
+             xmlns:vm="clr-namespace:Wonderlust.WPF.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="40" d:DesignWidth="400" d:DataContext="{d:DesignInstance {x:Type vm:ItemVM}, IsDesignTimeCreatable=True}">
+    <Grid VerticalAlignment="Top">
+        <TextBlock Text="{Binding DisplayName}" TextWrapping="NoWrap" Padding="4"/>
+        <!--Border BorderBrush="Black" BorderThickness="1" Padding="2">
+            <TextBlock Text="Notepad.exe" TextWrapping="NoWrap" />
+        </-->
+    </Grid>
+</UserControl>
