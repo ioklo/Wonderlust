@@ -13,6 +13,5 @@ namespace Wonderlust.WPF
 {
     public class App : Application
     {
-        
     }
 }

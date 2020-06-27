@@ -6,13 +6,13 @@ using Wonderlust.Core.Abstractions;
 
 namespace Wonderlust.Core
 {
-    class DriveFileItem : IItem
+    class FileContainerItem : IContainerItem
     {
         string path;
 
         public string Name => Path.GetFileName(path);
 
-        public DriveFileItem(string path)
+        public FileContainerItem(string path)
         {
             this.path = path;
         }

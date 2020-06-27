@@ -6,14 +6,23 @@
         xmlns:v="clr-namespace:Wonderlust.WPF.Views"
         xmlns:vm="clr-namespace:Wonderlust.WPF.ViewModels"
         mc:Ignorable="d"
+        UseLayoutRounding="True"
         Title="MainWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance {x:Type vm:MainWindowVM}, IsDesignTimeCreatable=True}">
 
-    <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Items}">
+    <ListBox Name="ListBox" 
+             SelectionMode="Extended"
+             HorizontalContentAlignment="Stretch" 
+             ItemsSource="{Binding Items}" 
+             KeyDown="ListBox_KeyDown"
+             MouseDoubleClick="ListBox_MouseDoubleClick"
+             Background="Black">
+        
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <v:ItemView HorizontalAlignment="Stretch"></v:ItemView>
             </DataTemplate>
-        </ListBox.ItemTemplate>        
+        </ListBox.ItemTemplate>
+        
     </ListBox>
     
 </Window>
