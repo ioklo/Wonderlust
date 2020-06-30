@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Diagnostics;
 using System.Text;
 using Wonderlust.Core.Abstractions;
 
 namespace Wonderlust.Core
 {
-    public class DummyWorkspaceItem : WorkspaceItem
+    public class FileWorkspaceItem : WorkspaceItem
     {
-        IContainerItem item;
+        FileContainerItem item;
         public override string DisplayName => item.Name;
 
         public override long? Size => item.Size;
 
         public override DateTime? DateTime => item.DateTime;
 
-        public DummyWorkspaceItem(Category category, IContainerItem item)
+        public FileWorkspaceItem(Category category, FileContainerItem item)
             : base(category)
         {
             this.item = item;
@@ -23,6 +23,18 @@ namespace Wonderlust.Core
 
         public override void Exec()
         {
+            try
+            {
+                var psi = new ProcessStartInfo();
+                psi.FileName = item.Path;
+                psi.UseShellExecute = true;
+
+                Process.Start(psi);
+            }
+            catch
+            {
+
+            }
         }
     }
 }

@@ -8,7 +8,14 @@
              mc:Ignorable="d"
              d:DesignHeight="40" d:DesignWidth="400" d:DataContext="{d:DesignInstance {x:Type vm:ItemVM}, IsDesignTimeCreatable=True}">
     <Grid VerticalAlignment="Top">
-        <TextBlock Foreground="{Binding Brush}" Text="{Binding DisplayName}" TextWrapping="NoWrap" Padding="4" FontFamily="Consolas" FontSize="16px" FontWeight="Medium"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"  />
+            <ColumnDefinition Width="Auto"  />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Foreground="{Binding Brush}" Text="{Binding DisplayName}" TextWrapping="NoWrap" Padding="4" FontFamily="Consolas" FontSize="16px" TextTrimming="CharacterEllipsis"/>
+        <TextBlock Grid.Column="1" Foreground="{Binding Brush}" Text="{Binding SizeText}" TextWrapping="NoWrap" Padding="4" FontFamily="Consolas" FontSize="16px" FontWeight="Medium"/>
+        <TextBlock Grid.Column="2" Foreground="{Binding Brush}" Text="{Binding DateText}" TextWrapping="NoWrap" Padding="4" FontFamily="Consolas" FontSize="16px" FontWeight="Medium"/>
         <!--Border BorderBrush="Black" BorderThickness="1" Padding="2">
             <TextBlock Text="Notepad.exe" TextWrapping="NoWrap" />
         </-->

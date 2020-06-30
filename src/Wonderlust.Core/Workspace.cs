@@ -10,30 +10,43 @@ namespace Wonderlust.Core
     {
         IContainer? prevContainer;
         IContainer container;
+        IWorkspaceItemFactory itemFactory;
 
         public event Action<IWorkspace>? OnContainerChanged;
 
-        public Workspace(IContainer container)
+        public Workspace(IContainer container, IWorkspaceItemFactory itemFactory)
         {
             this.prevContainer = null;
             this.container = container;
+            this.itemFactory = itemFactory;
         }
 
-        public IEnumerable<IWorkspaceItem> GetItems()
+        public (IEnumerable<IWorkspaceItem> Items, IWorkspaceItem? InitialSelection) GetItems()
         {
+            var items = new List<IWorkspaceItem>();
+            IWorkspaceItem? initialSelection = null;
+
             var parent = container.GetParent();
             if (parent != null)
-                yield return new ParentDirectoryWorkspaceItem(this, parent);
+                items.Add(itemFactory.MakeParentDirectoryItem(this, parent));
 
             foreach(var item in container.GetItems())
             {
-                if (item is DirectoryContainerItem directoryItem)
-                    yield return new DirectoryWorkspaceItem(this, directoryItem);
-                //else if (storageItem is FileItem fileItem)
-                //    yield return new FileWorkspaceItem(this, fileItem);
+                if (item is IDirectoryContainerItem directoryItem)
+                {
+                    var wi = itemFactory.MakeDirectoryItem(this, directoryItem.Container);
+
+                    // TODO: 지금은 디렉토리만 지원한다, 하지만 prevContainer는 디렉토리가 아닐 수도 있다(zip)
+                    if (directoryItem.Container.Equals(prevContainer))
+                        initialSelection = wi;
+
+                    items.Add(wi);
+                }
                 else
-                    yield return new DummyWorkspaceItem(item);
+                    items.Add(itemFactory.Make(this, item));
             }
+
+            return (items, initialSelection);
         }
 
         public void SetContainer(IContainer newContainer)
@@ -47,20 +60,13 @@ namespace Wonderlust.Core
         {
             return container;
         }
-
-        public bool IsRelatedPrevContainer(IWorkspaceItem item)
-        {
-            if (prevContainer == null) return false;
-
-            // TODO: 지금은 Drive만 검사한다
-            if (prevContainer is DriveContainer driveContainer && item is DirectoryWorkspaceItem dwi)
-                if (driveContainer.Path == dwi.Item.Path)
-                    return true;
-
-            return false;
-
-        }
-
         
+        public void SetContainerToParent()
+        {
+            var parent = container.GetParent();
+
+            if (parent != null)
+                SetContainer(parent);
+        }
     }
 }

@@ -5,21 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:v="clr-namespace:Wonderlust.WPF.Views"
         xmlns:vm="clr-namespace:Wonderlust.WPF.ViewModels"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         UseLayoutRounding="True"
-        Title="MainWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance {x:Type vm:MainWindowVM}, IsDesignTimeCreatable=True}">
+        Title="MainWindow" Height="450" Width="638" d:DataContext="{d:DesignInstance {x:Type vm:MainWindowVM}, IsDesignTimeCreatable=True}">
 
-    <ListBox Name="ListBox" 
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Alt" Key="Up" 
+                    Command="{Binding ExecuteCmd}" 
+                    CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />
+    </Window.InputBindings>        
+
+
+    <ListBox Name="ListBox"              
              SelectionMode="Extended"
-             HorizontalContentAlignment="Stretch" 
+             HorizontalContentAlignment="Stretch"              
              ItemsSource="{Binding Items}" 
-             KeyDown="ListBox_KeyDown"
-             MouseDoubleClick="ListBox_MouseDoubleClick"
-             Background="Black">
+             Background="Black"             
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+             KeyboardNavigation.AcceptsReturn="False">
+        
+        <b:Interaction.Triggers>
+            <b:KeyTrigger Key="Return">
+                <b:InvokeCommandAction Command="{Binding ExecuteCmd}" 
+                                       CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />
+            </b:KeyTrigger>
+
+            <b:KeyTrigger Modifiers="Ctrl" Key="X">
+                <b:CallMethodAction TargetObject="{Binding}" MethodName="SetContainerToParent"/>                
+            </b:KeyTrigger>
+
+            <b:EventTrigger EventName="MouseDoubleClick">
+                <b:InvokeCommandAction Command="{Binding ExecuteCmd}" 
+                                       CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />
+            </b:EventTrigger>
+            
+        </b:Interaction.Triggers>
         
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <v:ItemView HorizontalAlignment="Stretch"></v:ItemView>
+                <v:ItemView />
             </DataTemplate>
         </ListBox.ItemTemplate>
         

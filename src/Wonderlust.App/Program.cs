@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Wonderlust.Core;
 using Wonderlust.Core.Abstractions;
@@ -15,9 +16,11 @@ namespace Wonderlust.App
         public static void Main()
         {
             WPF.App app = new WPF.App();
-            
-            var driveContainer = new DriveContainer(@"Z:\Temp");
-            var workspace = new Workspace(driveContainer);
+
+            var driveContainer = new DriveContainer(@"Z:\Temp", Directory.GetLastWriteTime(@"Z:\Temp"));
+            var categoryFactory = new CategoryFactory();
+            var workspaceItemFactory = new WorkspaceItemFactory(categoryFactory);
+            var workspace = new Workspace(driveContainer, workspaceItemFactory);
 
             // view
             var mainWindow = new MainWindow(new MainWindowVM(workspace));

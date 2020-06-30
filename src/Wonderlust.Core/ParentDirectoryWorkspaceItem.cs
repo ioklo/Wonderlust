@@ -6,24 +6,13 @@ using Wonderlust.Core.Abstractions;
 
 namespace Wonderlust.Core
 {
-    class ParentDirectoryWorkspaceItem : IWorkspaceItem
+    class ParentDirectoryWorkspaceItem : ContainerWorkspaceItem
     {
-        IWorkspace workspace;
-        IContainer container;
+        public override string DisplayName => "..";
 
-        public string DisplayName => "..";
-
-        public Color Color => Color.FromArgb(251, 83, 83);
-
-        public ParentDirectoryWorkspaceItem(IWorkspace workspace, IContainer container)
+        public ParentDirectoryWorkspaceItem(Category category, IWorkspace workspace, IContainer container)
+            : base(category, workspace, container)
         {
-            this.workspace = workspace;
-            this.container = container;
-        }
-
-        public void Exec()
-        {
-            workspace.SetContainer(container);
         }
     }
 }

@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Wonderlust.Core.Abstractions;
+using SystemPath = System.IO.Path;
 
 namespace Wonderlust.Core
 {
-    class FileContainerItem : IContainerItem
+    public class FileContainerItem : IContainerItem
     {
-        string path;
+        public string Path { get; }
 
-        public string Name => Path.GetFileName(path);
+        public string Name => SystemPath.GetFileName(Path);
 
-        public FileContainerItem(string path)
+        public long? Size { get; }
+
+        public DateTime? DateTime { get; }
+
+        public FileContainerItem(string path, long size, DateTime dateTime)
         {
-            this.path = path;
+            Path = path;
+            Size = size;
+            DateTime = dateTime;
         }
     }
 }

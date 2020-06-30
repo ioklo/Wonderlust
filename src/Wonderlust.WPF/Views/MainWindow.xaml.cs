@@ -74,20 +74,5 @@ namespace Wonderlust.WPF.Views
 
             UpdateFocus();
         }
-
-        private void ListBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                if (ListBox.SelectedItem is ItemVM itemVM)
-                    itemVM.Exec();
-            }
-        }
-
-        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (ListBox.SelectedItem is ItemVM itemVM)
-                itemVM.Exec();
-        }
     }
 }

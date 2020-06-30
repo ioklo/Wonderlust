@@ -7,5 +7,7 @@ namespace Wonderlust.Core.Abstractions
     public interface IContainerItem
     {
         string Name { get; }
+        long? Size { get; }
+        DateTime? DateTime { get; }
     }
 }

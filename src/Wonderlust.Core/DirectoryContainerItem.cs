@@ -7,16 +7,21 @@ using SystemPath = System.IO.Path;
 
 namespace Wonderlust.Core
 {
-    class DirectoryContainerItem : IContainerItem
+    class DirectoryContainerItem : IDirectoryContainerItem
     {
-        public string Path { get; }
+        DriveContainer container;
 
-        public DirectoryContainerItem(string path)
+        public DirectoryContainerItem(DriveContainer container)
         {
-            Path = path;
+            this.container = container;
         }
 
         // TODO: DriveItem이 아닌경우 Path를 사용하면 안된다
-        public string Name => SystemPath.GetFileName(Path);
+        public string Name => SystemPath.GetFileName(container.Path);
+        public IContainer Container => container;
+
+        public long? Size => null;
+
+        public DateTime? DateTime => container.DateTime;
     }
 }
