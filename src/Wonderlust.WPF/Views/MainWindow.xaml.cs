@@ -73,6 +73,7 @@ namespace Wonderlust.WPF.Views
             Debug.Assert(ViewModel != null);
 
             UpdateFocus();
-        }
+        }        
+
     }
 }

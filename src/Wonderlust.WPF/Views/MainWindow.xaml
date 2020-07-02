@@ -5,15 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:v="clr-namespace:Wonderlust.WPF.Views"
         xmlns:vm="clr-namespace:Wonderlust.WPF.ViewModels"
+        xmlns:misc="clr-namespace:Wonderlust.WPF.Miscs"
+        
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        
         mc:Ignorable="d"
         UseLayoutRounding="True"
         Title="MainWindow" Height="450" Width="638" d:DataContext="{d:DesignInstance {x:Type vm:MainWindowVM}, IsDesignTimeCreatable=True}">
 
     <Window.InputBindings>
-        <KeyBinding Modifiers="Alt" Key="Up" 
+        <!--KeyBinding Modifiers="Alt" Key="Up" 
                     Command="{Binding ExecuteCmd}" 
-                    CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />
+                    CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" /-->
     </Window.InputBindings>        
 
 
@@ -26,15 +29,19 @@
              KeyboardNavigation.AcceptsReturn="False">
         
         <b:Interaction.Triggers>
-            <b:KeyTrigger Key="Return">
+            <misc:KeyTriggerEx Key="Return">
                 <b:InvokeCommandAction Command="{Binding ExecuteCmd}" 
                                        CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />
-            </b:KeyTrigger>
+            </misc:KeyTriggerEx>
 
-            <b:KeyTrigger Modifiers="Ctrl" Key="X">
+            <misc:KeyTriggerEx Key="Backspace">
+                <b:CallMethodAction TargetObject="{Binding}" MethodName="SetContainerToParent"/>
+            </misc:KeyTriggerEx>            
+
+            <misc:KeyTriggerEx Modifiers="Alt" Key="Up">
                 <b:CallMethodAction TargetObject="{Binding}" MethodName="SetContainerToParent"/>                
-            </b:KeyTrigger>
-
+            </misc:KeyTriggerEx>
+            
             <b:EventTrigger EventName="MouseDoubleClick">
                 <b:InvokeCommandAction Command="{Binding ExecuteCmd}" 
                                        CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />
