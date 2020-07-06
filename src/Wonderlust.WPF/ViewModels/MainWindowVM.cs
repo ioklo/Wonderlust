@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -17,14 +18,15 @@ namespace Wonderlust.WPF.ViewModels
     public class MainWindowVM
     {
         IWorkspace? workspace;
+        IList? selectedItems;
 
         public ObservableCollection<ItemVM> Items { get; private set; }
         public int SelectedIndex { get; set; }
-        public ItemVM? InitialSelectedItem { get; private set; }                
-        public RelayCommand<ItemVM> ExecuteCmd { get; }
+        public ItemVM? InitialSelectedItem { get; private set; }                        
+        public RelayCommand<string> ExecActionCmd { get; }
         public RelayCommand<string> SetContainerToDrivePathCmd { get; }
-        public RelayCommand<ItemVM> ShowPropertiesCmd { get; }
-
+        public RelayCommand ShowPropertiesCmd { get; }
+        
         public event Action? OnContainerChanged;
         public event Action? OnExitRequested;
 
@@ -35,23 +37,26 @@ namespace Wonderlust.WPF.ViewModels
             for(int i = 0; i < 20; i++)
                 Items.Add(new ItemVM());
 
-            InitialSelectedItem = Items[0];
-            ExecuteCmd = RelayCommand.MakeEmpty<ItemVM>();
+            InitialSelectedItem = Items[0];            
+            ExecActionCmd = RelayCommand.MakeEmpty<string>();
             SetContainerToDrivePathCmd = RelayCommand.MakeEmpty<string>();
-            ShowPropertiesCmd = RelayCommand.MakeEmpty<ItemVM>();
+            ShowPropertiesCmd = new RelayCommand();
+            selectedItems = null;
         }
 
         public MainWindowVM(IWorkspace workspace)
         {
-            Items = new ObservableCollection<ItemVM>();
-            ExecuteCmd = new RelayCommand<ItemVM>(ExecuteItem, AlwaysCanExecute<ItemVM>, true);
+            Items = new ObservableCollection<ItemVM>();            
+            ExecActionCmd = new RelayCommand<string>(ExecAction, AlwaysCanExecute<string>, true);
             SetContainerToDrivePathCmd = new RelayCommand<string>(SetContainerToDrivePath, CanSetContainerToDrivePath, true);
-            ShowPropertiesCmd = new RelayCommand<ItemVM>(ShowProperties, AlwaysCanExecute<ItemVM>, true);
+            ShowPropertiesCmd = new RelayCommand(ShowProperties, () => true, true);
 
-            this.workspace = workspace;
-            workspace.OnContainerChanged += Workspace_OnContainerChanged;            
+            this.workspace = workspace;            
+            workspace.OnContainerChanged += Workspace_OnContainerChanged;
+            selectedItems = null;
 
             UpdateItemsAndSelection();
+            
         }
 
         private bool CanSetContainerToDrivePath(string drivePath)
@@ -65,15 +70,103 @@ namespace Wonderlust.WPF.ViewModels
             workspace.SetContainer(new DriveContainer(drivePath, Directory.GetLastWriteTime(drivePath)), true);
         }
 
+        public void UpdateSelectedItems(IList selectedItems)
+        {
+            this.selectedItems = selectedItems;
+        }
+
         public void SetContainerToParent()
         {
             Debug.Assert(workspace != null);
             workspace.SetContainerToParent();
         }
-
-        private void ExecuteItem(ItemVM itemVM)
+        
+        private void ExecAction(string actionName)
         {
-            itemVM.Exec();
+            Debug.Assert(workspace != null);
+            var workspaceItems = GetSelectedWorkspaceItems();
+
+            if (actionName == "Default")
+            {
+                foreach (var item in workspaceItems)
+                {
+                    if (item is ContainerWorkspaceItem containerItem)
+                    {
+                        workspace.SetContainer(containerItem.Container, false);
+                    }
+                    else 
+                    {
+                        if (item.PhysicalPath != null)
+                        {
+                            try
+                            {
+                                var psi = new ProcessStartInfo();
+                                psi.FileName = item.PhysicalPath;
+                                psi.UseShellExecute = true;
+
+                                Process.Start(psi);
+                            }
+                            catch
+                            {
+
+                            }
+                        }
+                    }
+                }
+            }
+            else if (actionName == "View")
+            {   
+                var sb = new StringBuilder();
+                bool bError = false, bFirst = true;
+                foreach (var wi in workspaceItems)
+                {
+                    if (wi.PhysicalPath == null)
+                    {
+                        // TODO: 에러 전달 수단
+                        bError = true;
+                        break;
+                    }
+
+                    if (bFirst) bFirst = false;
+                    else sb.Append(' ');
+                    sb.Append($"\"{wi.PhysicalPath}\"");
+                }
+
+                if (!bError)
+                {
+                    try
+                    {
+                        var psi = new ProcessStartInfo();
+                        psi.FileName = "code"; // TODO:                 
+                        psi.Arguments = sb.ToString();
+                        psi.UseShellExecute = true;
+
+                        Process.Start(psi);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+        }
+
+        private List<IWorkspaceItem> GetSelectedWorkspaceItems()
+        {
+            Debug.Assert(selectedItems != null);
+
+            var workspaceItems = new List<IWorkspaceItem>(selectedItems.Count);
+            foreach (var selectedItem in selectedItems)
+            {
+                var itemVM = selectedItem as ItemVM;
+
+                if (itemVM == null) continue;
+                if (itemVM.Item == null) continue;
+
+                workspaceItems.Add(itemVM.Item);
+            }
+
+            return workspaceItems;
         }
 
         private bool AlwaysCanExecute<T>(T t)
@@ -119,9 +212,30 @@ namespace Wonderlust.WPF.ViewModels
             OnExitRequested?.Invoke();
         }
 
-        public void ShowProperties(ItemVM itemVM)
+        public void ShowProperties()
         {
-            itemVM.ShowProperties();
+            var workspaceItems = GetSelectedWorkspaceItems();
+
+            if (workspaceItems.Count == 0)
+            {
+                return;
+            }
+            else if (workspaceItems.Count == 1)
+            {
+                var item = workspaceItems[0];
+                if (item.PhysicalPath != null)
+                {
+                    PropertyWindow.Open(item.PhysicalPath);
+                }
+            }
+            else
+            {
+                if (0 < workspaceItems.Count(item => item.PhysicalPath == null))
+                    return;
+
+                PropertyWindow.Open(
+                    workspaceItems.Select(item => item.PhysicalPath)!);
+            }
         }        
     }
 }

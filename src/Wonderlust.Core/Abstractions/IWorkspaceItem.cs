@@ -10,7 +10,6 @@ namespace Wonderlust.Core.Abstractions
         DateTime? DateTime { get; }
 
         Category Category { get; }
-        void Exec();
-        void ShowProperties();
+        string? PhysicalPath { get; }
     }
 }

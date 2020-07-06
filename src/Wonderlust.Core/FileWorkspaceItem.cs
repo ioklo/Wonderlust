@@ -8,45 +8,19 @@ namespace Wonderlust.Core
 {
     public class FileWorkspaceItem : WorkspaceItem
     {
-        FileContainerItem item;
-        public override string DisplayName => item.Name;
+        public FileContainerItem Item { get; }
+        public override string DisplayName => Item.Name;
 
-        public override long? Size => item.Size;
+        public override long? Size => Item.Size;
 
-        public override DateTime? DateTime => item.DateTime;
+        public override DateTime? DateTime => Item.DateTime;
+
+        public override string? PhysicalPath => Item.Path;
 
         public FileWorkspaceItem(Category category, FileContainerItem item)
             : base(category)
         {
-            this.item = item;
-        }
-
-        public override void Exec()
-        {
-            try
-            {
-                var psi = new ProcessStartInfo();
-                psi.FileName = item.Path;
-                psi.UseShellExecute = true;
-
-                Process.Start(psi);
-            }
-            catch
-            {
-
-            }
-        }
-
-        public override void ShowProperties()
-        {
-            try
-            {
-                PropertyWindow.Open(item.Path);
-            }
-            catch
-            {
-
-            }
+            this.Item = item;
         }
     }
 }

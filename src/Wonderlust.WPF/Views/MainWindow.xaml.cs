@@ -73,7 +73,11 @@ namespace Wonderlust.WPF.Views
             Debug.Assert(ViewModel != null);
 
             UpdateFocus();
-        }        
+        }
 
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel?.UpdateSelectedItems(ListBox.SelectedItems);
+        }
     }
 }

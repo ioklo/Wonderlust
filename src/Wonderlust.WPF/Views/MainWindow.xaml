@@ -20,12 +20,12 @@
              ItemsSource="{Binding Items}" 
              Background="Black"             
              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+             SelectionChanged="ListBox_SelectionChanged"
              KeyboardNavigation.AcceptsReturn="False">
         
         <b:Interaction.Triggers>
             <misc:KeyTriggerEx Key="Return">
-                <b:InvokeCommandAction Command="{Binding ExecuteCmd}" 
-                                       CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />
+                <b:InvokeCommandAction Command="{Binding ExecActionCmd}" CommandParameter="Default" />
             </misc:KeyTriggerEx>
 
             <misc:KeyTriggerEx Key="Backspace">
@@ -41,12 +41,12 @@
             </misc:KeyTriggerEx>
 
             <misc:KeyTriggerEx Modifiers="Alt" Key="V">
-                <b:CallMethodAction TargetObject="{Binding}" MethodName="RequestExit"/>
+                <b:InvokeCommandAction Command="{Binding ExecActionCmd}" 
+                                       CommandParameter="View" />
             </misc:KeyTriggerEx>
             
             <misc:KeyTriggerEx Modifiers="Alt" Key="Return">
-                <b:InvokeCommandAction Command="{Binding ShowPropertiesCmd}" 
-                                       CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />
+                <b:InvokeCommandAction Command="{Binding ShowPropertiesCmd}" />
             </misc:KeyTriggerEx>
 
             <misc:KeyTriggerEx Modifiers="Shift" Key="C">
@@ -56,12 +56,10 @@
             <misc:KeyTriggerEx Modifiers="Shift" Key="Z">
                 <b:InvokeCommandAction Command="{Binding SetContainerToDrivePathCmd}" CommandParameter="Z:\" />
             </misc:KeyTriggerEx>
-            
-            
 
             <b:EventTrigger EventName="MouseDoubleClick">
-                <b:InvokeCommandAction Command="{Binding ExecuteCmd}" 
-                                       CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />
+                <b:InvokeCommandAction Command="{Binding ExecActionCmd}" 
+                                       CommandParameter="Default" />
             </b:EventTrigger>
             
         </b:Interaction.Triggers>

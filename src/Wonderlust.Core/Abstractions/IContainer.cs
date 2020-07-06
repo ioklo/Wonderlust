@@ -9,6 +9,7 @@ namespace Wonderlust.Core.Abstractions
     {
         string Name { get; }
         DateTime? DateTime { get; }
+        string? PhysicalPath { get; }
 
         IContainer? GetParent();
         IEnumerable<IContainerItem> GetItems();        

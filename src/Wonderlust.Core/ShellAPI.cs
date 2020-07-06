@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace Wonderlust.Core
@@ -78,5 +79,18 @@ namespace Wonderlust.Core
             SEE_MASK_WAITFORINPUTIDLE = 0x02000000,
             SEE_MASK_FLAG_LOG_USAGE = 0x04000000,
         }
+
+
+        [DllImport("shell32.dll", SetLastError = true)]
+        public static extern int SHMultiFileProperties(IDataObject pdtobj, int flags);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr ILCreateFromPath(string path);
+
+        [DllImport("shell32.dll", CharSet = CharSet.None)]
+        public static extern void ILFree(IntPtr pidl);
+
+        [DllImport("shell32.dll", CharSet = CharSet.None)]
+        public static extern int ILGetSize(IntPtr pidl);
     }
 }

@@ -8,7 +8,7 @@ namespace Wonderlust.Core
 {
     class DirectoryWorkspaceItem : ContainerWorkspaceItem
     {
-        public override string DisplayName => Container.Name;
+        public override string DisplayName => Container.Name;        
 
         public DirectoryWorkspaceItem(Category category, IWorkspace workspace, IContainer container)
             : base(category, workspace, container)

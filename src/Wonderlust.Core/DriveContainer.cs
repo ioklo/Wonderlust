@@ -13,6 +13,7 @@ namespace Wonderlust.Core
     {
         public string Path { get; }
         public string Name { get => SystemPath.GetFileName(Path); }
+        public string? PhysicalPath => Path;
 
         public DateTime? DateTime { get; }
 

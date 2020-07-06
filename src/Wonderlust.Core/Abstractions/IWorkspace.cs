@@ -13,6 +13,6 @@ namespace Wonderlust.Core.Abstractions
 
         event Action<IWorkspace> OnContainerChanged;
         
-        void SetContainerToParent();
+        void SetContainerToParent();        
     }
 }

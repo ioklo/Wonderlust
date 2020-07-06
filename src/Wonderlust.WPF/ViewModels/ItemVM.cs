@@ -7,9 +7,9 @@ using Wonderlust.Core.Abstractions;
 
 namespace Wonderlust.WPF.ViewModels
 {
-    public class ItemVM : DependencyObject
+    public class ItemVM
     {
-        IWorkspaceItem? item;
+        public IWorkspaceItem? Item { get; }
         public string DisplayName { get; set; }
         public string SizeText { get; set; }
         public string DateText { get; set; }
@@ -17,7 +17,7 @@ namespace Wonderlust.WPF.ViewModels
 
         public ItemVM()
         {
-            item = null;
+            Item = null;
             DisplayName = "Notepadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.exe";
             SizeText = "3,123,534";
             DateText = "20-03-24 11:88";
@@ -26,21 +26,11 @@ namespace Wonderlust.WPF.ViewModels
 
         public ItemVM(IWorkspaceItem item, Brush brush)
         {
-            this.item = item;
+            Item = item;
             DisplayName = item.DisplayName.ToUpper();
             SizeText = item.Size.HasValue ? item.Size.Value.ToString("N0") : string.Empty;
             DateText = item.DateTime.HasValue ? item.DateTime.Value.ToString("yyyy-MM-dd hh:mm") : string.Empty;
             Brush = brush;
-        }
-
-        public void Exec()
-        {
-            item?.Exec();
-        }
-
-        public void ShowProperties()
-        {
-            item?.ShowProperties();
         }
     }
 }

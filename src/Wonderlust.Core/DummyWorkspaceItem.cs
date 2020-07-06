@@ -15,18 +15,14 @@ namespace Wonderlust.Core
 
         public override DateTime? DateTime => item.DateTime;
 
+        public override string? PhysicalPath => null;
+
         public DummyWorkspaceItem(Category category, IContainerItem item)
             : base(category)
         {
             this.item = item;
         }
 
-        public override void Exec()
-        {
-        }
 
-        public override void ShowProperties()
-        {
-        }
     }
 }
