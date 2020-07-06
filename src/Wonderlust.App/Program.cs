@@ -23,7 +23,9 @@ namespace Wonderlust.App
             var workspace = new Workspace(driveContainer, workspaceItemFactory);
 
             // view
-            var mainWindow = new MainWindow(new MainWindowVM(workspace));
+            var mainWindowVM = new MainWindowVM(workspace);
+            mainWindowVM.OnExitRequested += () => { app.Shutdown(); };
+            var mainWindow = new MainWindow(mainWindowVM);
 
             app.Run(mainWindow);
         }

@@ -11,6 +11,6 @@ namespace Wonderlust.Core.Abstractions
         DateTime? DateTime { get; }
 
         IContainer? GetParent();
-        IEnumerable<IContainerItem> GetItems();
+        IEnumerable<IContainerItem> GetItems();        
     }
 }

@@ -24,5 +24,9 @@ namespace Wonderlust.Core
         public override void Exec()
         {
         }
+
+        public override void ShowProperties()
+        {
+        }
     }
 }

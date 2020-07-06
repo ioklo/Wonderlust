@@ -36,5 +36,17 @@ namespace Wonderlust.Core
 
             }
         }
+
+        public override void ShowProperties()
+        {
+            try
+            {
+                PropertyWindow.Open(item.Path);
+            }
+            catch
+            {
+
+            }
+        }
     }
 }

@@ -30,28 +30,36 @@ namespace Wonderlust.Core
             if (parent != null)
                 items.Add(itemFactory.MakeParentDirectoryItem(this, parent));
 
-            foreach(var item in container.GetItems())
+            try
             {
-                if (item is IDirectoryContainerItem directoryItem)
+                foreach (var item in container.GetItems())
                 {
-                    var wi = itemFactory.MakeDirectoryItem(this, directoryItem.Container);
+                    if (item is IDirectoryContainerItem directoryItem)
+                    {
+                        var wi = itemFactory.MakeDirectoryItem(this, directoryItem.Container);
 
-                    // TODO: 지금은 디렉토리만 지원한다, 하지만 prevContainer는 디렉토리가 아닐 수도 있다(zip)
-                    if (directoryItem.Container.Equals(prevContainer))
-                        initialSelection = wi;
+                        // TODO: 지금은 디렉토리만 지원한다, 하지만 prevContainer는 디렉토리가 아닐 수도 있다(zip)
+                        if (directoryItem.Container.Equals(prevContainer))
+                            initialSelection = wi;
 
-                    items.Add(wi);
+                        items.Add(wi);
+                    }
+                    else
+                        items.Add(itemFactory.Make(this, item));
                 }
-                else
-                    items.Add(itemFactory.Make(this, item));
+            }
+            catch
+            {
+
             }
 
             return (items, initialSelection);
         }
 
-        public void SetContainer(IContainer newContainer)
+        public void SetContainer(IContainer newContainer, bool bDontSetInitialSelection)
         {
-            prevContainer = container;
+            prevContainer = bDontSetInitialSelection ? null : container;
+
             container = newContainer;
             OnContainerChanged?.Invoke(this);
         }
@@ -66,7 +74,7 @@ namespace Wonderlust.Core
             var parent = container.GetParent();
 
             if (parent != null)
-                SetContainer(parent);
+                SetContainer(parent, false);
         }
     }
 }

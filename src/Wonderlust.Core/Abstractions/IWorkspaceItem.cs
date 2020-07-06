@@ -11,5 +11,6 @@ namespace Wonderlust.Core.Abstractions
 
         Category Category { get; }
         void Exec();
+        void ShowProperties();
     }
 }

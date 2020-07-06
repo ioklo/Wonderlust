@@ -14,7 +14,6 @@ namespace Wonderlust.WPF.ViewModels
         public string SizeText { get; set; }
         public string DateText { get; set; }
         public Brush Brush { get; set; }
-        public RelayCommand ExecuteCommand { get; }
 
         public ItemVM()
         {
@@ -23,7 +22,6 @@ namespace Wonderlust.WPF.ViewModels
             SizeText = "3,123,534";
             DateText = "20-03-24 11:88";
             Brush = new SolidColorBrush(Colors.LightGray);
-            ExecuteCommand = new RelayCommand();
         }
 
         public ItemVM(IWorkspaceItem item, Brush brush)
@@ -33,12 +31,16 @@ namespace Wonderlust.WPF.ViewModels
             SizeText = item.Size.HasValue ? item.Size.Value.ToString("N0") : string.Empty;
             DateText = item.DateTime.HasValue ? item.DateTime.Value.ToString("yyyy-MM-dd hh:mm") : string.Empty;
             Brush = brush;
-            ExecuteCommand = new RelayCommand(Exec, () => true, true);
         }
 
         public void Exec()
         {
             item?.Exec();
+        }
+
+        public void ShowProperties()
+        {
+            item?.ShowProperties();
         }
     }
 }

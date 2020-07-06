@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
@@ -31,6 +32,7 @@ namespace Wonderlust.Core
 
         public IEnumerable<IContainerItem> GetItems()
         {
+            
             foreach (var child in Directory.EnumerateDirectories(Path))
                 yield return new DirectoryContainerItem(new DriveContainer(child, Directory.GetLastWriteTime(child)));
 
@@ -39,7 +41,7 @@ namespace Wonderlust.Core
                 var fileInfo = new FileInfo(file);
 
                 yield return new FileContainerItem(file, fileInfo.Length, fileInfo.LastWriteTime);
-            }
+            }            
         }
 
         public bool Equals([AllowNull] IContainer other)

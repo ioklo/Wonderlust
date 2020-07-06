@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Wonderlust.Core.Abstractions;
 
 namespace Wonderlust.Core
@@ -20,7 +21,29 @@ namespace Wonderlust.Core
 
         public override void Exec()
         {
-            workspace.SetContainer(Container);
+            workspace.SetContainer(Container, false);
+        }
+
+        public override void ShowProperties()
+        {
+            try
+            {
+                if (Container is DriveContainer driveContainer)
+                {
+                    PropertyWindow.Open(driveContainer.Path);
+
+                    //var psi = new ProcessStartInfo();
+                    //psi.FileName = driveContainer.Path;
+                    //psi.UseShellExecute = true;
+                    //psi.Verb = "properties";
+
+                    //Process.Start(psi);
+                }
+            }
+            catch
+            {
+
+            }
         }
     }
 }

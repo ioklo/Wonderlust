@@ -8,7 +8,7 @@ namespace Wonderlust.Core.Abstractions
     public interface IWorkspace
     {
         (IEnumerable<IWorkspaceItem> Items, IWorkspaceItem? InitialSelection) GetItems();
-        void SetContainer(IContainer container);
+        void SetContainer(IContainer container, bool bDontSetInitialSelection);
         IContainer GetContainer();
 
         event Action<IWorkspace> OnContainerChanged;

@@ -71,7 +71,7 @@ namespace Wonderlust.WPF.Miscs
             if (e.Key == Key.System)
             {
                 if (e.SystemKey == this.Key &&
-                    Keyboard.Modifiers == GetActualModifiers(e.Key, this.Modifiers))
+                    this.Modifiers == GetActualModifiers(e.Key, Keyboard.Modifiers))
                 {
                     this.InvokeActions(e);
                 }
@@ -79,7 +79,7 @@ namespace Wonderlust.WPF.Miscs
             else
             {
                 if (e.Key == this.Key &&
-                    Keyboard.Modifiers == GetActualModifiers(e.Key, this.Modifiers))
+                    this.Modifiers == GetActualModifiers(e.Key, Keyboard.Modifiers))
                 {
                     this.InvokeActions(e);
                 }

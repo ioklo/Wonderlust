@@ -16,5 +16,7 @@ namespace Wonderlust.Core
         }
 
         public abstract void Exec();
+
+        public abstract void ShowProperties();
     }
 }

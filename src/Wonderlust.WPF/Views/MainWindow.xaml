@@ -13,14 +13,8 @@
         UseLayoutRounding="True"
         Title="MainWindow" Height="450" Width="638" d:DataContext="{d:DesignInstance {x:Type vm:MainWindowVM}, IsDesignTimeCreatable=True}">
 
-    <Window.InputBindings>
-        <!--KeyBinding Modifiers="Alt" Key="Up" 
-                    Command="{Binding ExecuteCmd}" 
-                    CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" /-->
-    </Window.InputBindings>        
-
-
     <ListBox Name="ListBox"              
+             TextSearch.TextPath="DisplayName"
              SelectionMode="Extended"
              HorizontalContentAlignment="Stretch"              
              ItemsSource="{Binding Items}" 
@@ -39,9 +33,32 @@
             </misc:KeyTriggerEx>            
 
             <misc:KeyTriggerEx Modifiers="Alt" Key="Up">
-                <b:CallMethodAction TargetObject="{Binding}" MethodName="SetContainerToParent"/>                
+                <b:CallMethodAction TargetObject="{Binding}" MethodName="SetContainerToParent"/>
+            </misc:KeyTriggerEx>
+
+            <misc:KeyTriggerEx Modifiers="Alt" Key="X">
+                <b:CallMethodAction TargetObject="{Binding}" MethodName="RequestExit"/>
+            </misc:KeyTriggerEx>
+
+            <misc:KeyTriggerEx Modifiers="Alt" Key="V">
+                <b:CallMethodAction TargetObject="{Binding}" MethodName="RequestExit"/>
             </misc:KeyTriggerEx>
             
+            <misc:KeyTriggerEx Modifiers="Alt" Key="Return">
+                <b:InvokeCommandAction Command="{Binding ShowPropertiesCmd}" 
+                                       CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />
+            </misc:KeyTriggerEx>
+
+            <misc:KeyTriggerEx Modifiers="Shift" Key="C">
+                <b:InvokeCommandAction Command="{Binding SetContainerToDrivePathCmd}" CommandParameter="C:\" />
+            </misc:KeyTriggerEx>
+
+            <misc:KeyTriggerEx Modifiers="Shift" Key="Z">
+                <b:InvokeCommandAction Command="{Binding SetContainerToDrivePathCmd}" CommandParameter="Z:\" />
+            </misc:KeyTriggerEx>
+            
+            
+
             <b:EventTrigger EventName="MouseDoubleClick">
                 <b:InvokeCommandAction Command="{Binding ExecuteCmd}" 
                                        CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.IO.Packaging;
 using System.Linq;
 using System.Text;
@@ -21,9 +22,11 @@ namespace Wonderlust.WPF.ViewModels
         public int SelectedIndex { get; set; }
         public ItemVM? InitialSelectedItem { get; private set; }                
         public RelayCommand<ItemVM> ExecuteCmd { get; }
-        //public RelayCommand MoveToParentContainerCmd { get; }
+        public RelayCommand<string> SetContainerToDrivePathCmd { get; }
+        public RelayCommand<ItemVM> ShowPropertiesCmd { get; }
 
         public event Action? OnContainerChanged;
+        public event Action? OnExitRequested;
 
         // design-time data
         public MainWindowVM()
@@ -34,19 +37,32 @@ namespace Wonderlust.WPF.ViewModels
 
             InitialSelectedItem = Items[0];
             ExecuteCmd = RelayCommand.MakeEmpty<ItemVM>();
-            //MoveToParentContainerCmd = new RelayCommand();
+            SetContainerToDrivePathCmd = RelayCommand.MakeEmpty<string>();
+            ShowPropertiesCmd = RelayCommand.MakeEmpty<ItemVM>();
         }
 
         public MainWindowVM(IWorkspace workspace)
         {
             Items = new ObservableCollection<ItemVM>();
-            ExecuteCmd = new RelayCommand<ItemVM>(ExecuteItem, CanExecuteItem, true);
-            // MoveToParentContainerCmd = new RelayCommand(MoveToParentContainer, , true);
+            ExecuteCmd = new RelayCommand<ItemVM>(ExecuteItem, AlwaysCanExecute<ItemVM>, true);
+            SetContainerToDrivePathCmd = new RelayCommand<string>(SetContainerToDrivePath, CanSetContainerToDrivePath, true);
+            ShowPropertiesCmd = new RelayCommand<ItemVM>(ShowProperties, AlwaysCanExecute<ItemVM>, true);
 
             this.workspace = workspace;
             workspace.OnContainerChanged += Workspace_OnContainerChanged;            
 
             UpdateItemsAndSelection();
+        }
+
+        private bool CanSetContainerToDrivePath(string drivePath)
+        {
+            return Directory.Exists(drivePath);
+        }
+
+        private void SetContainerToDrivePath(string drivePath)
+        {
+            Debug.Assert(workspace != null);
+            workspace.SetContainer(new DriveContainer(drivePath, Directory.GetLastWriteTime(drivePath)), true);
         }
 
         public void SetContainerToParent()
@@ -60,7 +76,7 @@ namespace Wonderlust.WPF.ViewModels
             itemVM.Exec();
         }
 
-        private bool CanExecuteItem(ItemVM itemVM)
+        private bool AlwaysCanExecute<T>(T t)
         {
             return true;
         }
@@ -97,5 +113,15 @@ namespace Wonderlust.WPF.ViewModels
 
             OnContainerChanged?.Invoke();
         }
+
+        public void RequestExit()
+        {
+            OnExitRequested?.Invoke();
+        }
+
+        public void ShowProperties(ItemVM itemVM)
+        {
+            itemVM.ShowProperties();
+        }        
     }
 }
