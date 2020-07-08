@@ -21,6 +21,8 @@
              Background="Black"             
              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
              SelectionChanged="ListBox_SelectionChanged"
+             FocusManager.GotFocus="ListBox_GotFocus"
+             FocusManager.LostFocus="ListBox_LostFocus"
              KeyboardNavigation.AcceptsReturn="False">
         
         <b:Interaction.Triggers>
@@ -34,6 +36,14 @@
 
             <misc:KeyTriggerEx Modifiers="Alt" Key="Up">
                 <b:CallMethodAction TargetObject="{Binding}" MethodName="SetContainerToParent"/>
+            </misc:KeyTriggerEx>
+
+            <misc:KeyTriggerEx Modifiers="Alt" Key="Left">
+                <b:InvokeCommandAction Command="{Binding ExecActionCmd}" CommandParameter="Back" />
+            </misc:KeyTriggerEx>
+
+            <misc:KeyTriggerEx Modifiers="Alt" Key="Right">
+                <b:InvokeCommandAction Command="{Binding ExecActionCmd}" CommandParameter="Forward" />
             </misc:KeyTriggerEx>
 
             <misc:KeyTriggerEx Modifiers="Alt" Key="X">

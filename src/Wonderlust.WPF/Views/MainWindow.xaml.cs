@@ -79,5 +79,24 @@ namespace Wonderlust.WPF.Views
         {
             ViewModel?.UpdateSelectedItems(ListBox.SelectedItems);
         }
+
+        private void ListBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel == null) return;
+
+            if (e.OriginalSource is ListBoxItem listBoxItem)
+                if (listBoxItem.DataContext is ItemVM itemVM)
+                {
+                    ViewModel.SetFocusedItem(itemVM);
+                }
+        }
+
+        private void ListBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel == null) return;
+
+            if (e.OriginalSource is ListBoxItem listBoxItem)
+                ViewModel.SetFocusedItem(null);
+        }
     }
 }

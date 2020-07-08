@@ -20,7 +20,9 @@ namespace Wonderlust.App
             var driveContainer = new DriveContainer(@"Z:\Temp", Directory.GetLastWriteTime(@"Z:\Temp"));
             var categoryFactory = new CategoryFactory();
             var workspaceItemFactory = new WorkspaceItemFactory(categoryFactory);
-            var workspace = new Workspace(driveContainer, workspaceItemFactory);
+            var workspace = new Workspace(workspaceItemFactory);
+
+            workspace.SetContainer(driveContainer, true);
 
             // view
             var mainWindowVM = new MainWindowVM(workspace);

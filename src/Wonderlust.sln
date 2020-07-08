@@ -3,16 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonderlust.WPF", "Wonderlust.WPF\Wonderlust.WPF.csproj", "{E76C7A30-3BA9-42C9-AEB2-69D9A8F0DA08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wonderlust.WPF", "Wonderlust.WPF\Wonderlust.WPF.csproj", "{E76C7A30-3BA9-42C9-AEB2-69D9A8F0DA08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonderlust.Core", "Wonderlust.Core\Wonderlust.Core.csproj", "{15CED997-42E4-401A-83C7-53A1AFE7866F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wonderlust.Core", "Wonderlust.Core\Wonderlust.Core.csproj", "{15CED997-42E4-401A-83C7-53A1AFE7866F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonderlust.App", "Wonderlust.App\Wonderlust.App.csproj", "{7E9343B0-3573-4326-8456-F63111DE0789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wonderlust.App", "Wonderlust.App\Wonderlust.App.csproj", "{7E9343B0-3573-4326-8456-F63111DE0789}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E9692AB-ADDA-4FD4-97A4-BD195869A25A}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.Props = Directory.Build.Props
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wonderlust.Core.Test", "Wonderlust.Core.Test\Wonderlust.Core.Test.csproj", "{A05F07E8-E53D-4B5A-BD33-A01E26DD444E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{7E9343B0-3573-4326-8456-F63111DE0789}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E9343B0-3573-4326-8456-F63111DE0789}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E9343B0-3573-4326-8456-F63111DE0789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A05F07E8-E53D-4B5A-BD33-A01E26DD444E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A05F07E8-E53D-4B5A-BD33-A01E26DD444E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A05F07E8-E53D-4B5A-BD33-A01E26DD444E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A05F07E8-E53D-4B5A-BD33-A01E26DD444E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

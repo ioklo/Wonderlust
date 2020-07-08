@@ -20,13 +20,12 @@ namespace Wonderlust.WPF.ViewModels
         IWorkspace? workspace;
         IList? selectedItems;
 
-        public ObservableCollection<ItemVM> Items { get; private set; }
-        public int SelectedIndex { get; set; }
+        public ObservableCollection<ItemVM> Items { get; private set; }        
         public ItemVM? InitialSelectedItem { get; private set; }                        
         public RelayCommand<string> ExecActionCmd { get; }
         public RelayCommand<string> SetContainerToDrivePathCmd { get; }
-        public RelayCommand ShowPropertiesCmd { get; }
-        
+        public RelayCommand ShowPropertiesCmd { get; }        
+
         public event Action? OnContainerChanged;
         public event Action? OnExitRequested;
 
@@ -92,6 +91,7 @@ namespace Wonderlust.WPF.ViewModels
                 {
                     if (item is ContainerWorkspaceItem containerItem)
                     {
+                        workspace.History.Add();
                         workspace.SetContainer(containerItem.Container, false);
                     }
                     else 
@@ -149,6 +149,14 @@ namespace Wonderlust.WPF.ViewModels
                     }
                 }
             }
+            else if (actionName == "Back")
+            {
+                workspace.History.Back();
+            }
+            else if (actionName == "Forward")
+            {
+                workspace.History.Forward();
+            }
         }
 
         private List<IWorkspaceItem> GetSelectedWorkspaceItems()
@@ -180,7 +188,8 @@ namespace Wonderlust.WPF.ViewModels
 
             Items.Clear();
 
-            var (items, initialSelection) = workspace.GetItems();
+            var items = workspace.GetItems();
+            var initialSelection = workspace.GetCurItem();
 
             InitialSelectedItem = null;
             foreach (var item in items)
@@ -237,5 +246,12 @@ namespace Wonderlust.WPF.ViewModels
                     workspaceItems.Select(item => item.PhysicalPath)!);
             }
         }        
+
+        public void SetFocusedItem(ItemVM? itemVM)
+        {
+            Debug.Assert(workspace != null);            
+
+            workspace.SetCurItem(itemVM?.Item);
+        }
     }
 }
