@@ -17,14 +17,22 @@ namespace Wonderlust.Core
         }
     }
 
+    public interface IHistoryWorkspace
+    {
+        IContainer? GetContainer();
+        IWorkspaceItem? GetCurItem();
+
+        void SetContainer(IContainer container, IWorkspaceItem workspaceItem);
+    }
+
     // 워크스페이스별로 히스토리를 관리해야 한다
     public class History : IHistory
     {
-        Workspace workspace;
+        IHistoryWorkspace workspace;
         List<HistoryEntry> entries;
         int index;
 
-        public History(Workspace workspace)
+        public History(IHistoryWorkspace workspace)
         {
             this.workspace = workspace;
 
@@ -44,12 +52,12 @@ namespace Wonderlust.Core
             // 0 1 2 3 4 Count:5
             //     ^  
             // 0 1 2 3' 
-            //          ^            
+            //       ^            
             if (index < entries.Count - 1)
                 entries.RemoveRange(index + 1, entries.Count - index - 1);
 
             entries.Add(new HistoryEntry(container, item));
-            index = entries.Count;
+            index = entries.Count - 1;
         }
 
         public void Back()

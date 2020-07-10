@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Wonderlust.Core;
 using Wonderlust.Core.Abstractions;
+using Wonderlust.WPF.Interactors;
 using Wonderlust.WPF.Views;
 
 namespace Wonderlust.WPF.ViewModels
@@ -82,80 +83,31 @@ namespace Wonderlust.WPF.ViewModels
         
         private void ExecAction(string actionName)
         {
-            Debug.Assert(workspace != null);
-            var workspaceItems = GetSelectedWorkspaceItems();
+            Debug.Assert(workspace != null);            
 
             if (actionName == "Default")
             {
-                foreach (var item in workspaceItems)
-                {
-                    if (item is ContainerWorkspaceItem containerItem)
-                    {
-                        workspace.History.Add();
-                        workspace.SetContainer(containerItem.Container, false);
-                    }
-                    else 
-                    {
-                        if (item.PhysicalPath != null)
-                        {
-                            try
-                            {
-                                var psi = new ProcessStartInfo();
-                                psi.FileName = item.PhysicalPath;
-                                psi.UseShellExecute = true;
-
-                                Process.Start(psi);
-                            }
-                            catch
-                            {
-
-                            }
-                        }
-                    }
-                }
+                var workspaceItems = GetSelectedWorkspaceItems();
+                var interactor = new DefaultActionInteractor(workspace, workspaceItems);
+                
+                interactor.Exec();
             }
             else if (actionName == "View")
-            {   
-                var sb = new StringBuilder();
-                bool bError = false, bFirst = true;
-                foreach (var wi in workspaceItems)
-                {
-                    if (wi.PhysicalPath == null)
-                    {
-                        // TODO: 에러 전달 수단
-                        bError = true;
-                        break;
-                    }
+            {
+                var workspaceItems = GetSelectedWorkspaceItems();
+                var interactor = new ViewActionInteractor(workspaceItems);
 
-                    if (bFirst) bFirst = false;
-                    else sb.Append(' ');
-                    sb.Append($"\"{wi.PhysicalPath}\"");
-                }
-
-                if (!bError)
-                {
-                    try
-                    {
-                        var psi = new ProcessStartInfo();
-                        psi.FileName = "code"; // TODO:                 
-                        psi.Arguments = sb.ToString();
-                        psi.UseShellExecute = true;
-
-                        Process.Start(psi);
-                    }
-                    catch
-                    {
-
-                    }
-                }
+                interactor.Exec();
             }
             else if (actionName == "Back")
             {
-                workspace.History.Back();
+                var interactor = new HistoryBackInteractor(workspace);
+                interactor.Exec();
             }
             else if (actionName == "Forward")
             {
-                workspace.History.Forward();
+                var interactor = new HistoryForwardInteractor(workspace);
+                interactor.Exec();
             }
         }
 

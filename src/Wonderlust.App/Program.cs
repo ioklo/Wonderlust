@@ -23,6 +23,7 @@ namespace Wonderlust.App
             var workspace = new Workspace(workspaceItemFactory);
 
             workspace.SetContainer(driveContainer, true);
+            workspace.History.Add();
 
             // view
             var mainWindowVM = new MainWindowVM(workspace);

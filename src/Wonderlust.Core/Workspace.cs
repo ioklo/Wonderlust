@@ -7,7 +7,7 @@ using Wonderlust.Core.Abstractions;
 
 namespace Wonderlust.Core
 {
-    public class Workspace : IWorkspace
+    public class Workspace : IWorkspace, IHistoryWorkspace
     {
         IWorkspaceItemFactory itemFactory;
 
@@ -114,6 +114,11 @@ namespace Wonderlust.Core
                         curItem = wi;
                     }
                 }
+
+                // TODO: 아무것도 없으면 뭐라도 하나 만들어야 한다
+                if (curItem == null && items.Count != 0)
+                    curItem = items[0];
+                
             }
             catch
             {
