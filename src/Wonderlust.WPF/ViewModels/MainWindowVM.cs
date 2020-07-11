@@ -109,6 +109,31 @@ namespace Wonderlust.WPF.ViewModels
                 var interactor = new HistoryForwardInteractor(workspace);
                 interactor.Exec();
             }
+            else if (actionName == "ToggleSortByName")
+            {
+                var interactor = new ToggleSortByNameInteractor(workspace);
+                interactor.Exec();
+            }
+            else if (actionName == "ToggleSortBySize")
+            {
+                var interactor = new ToggleSortBySizeInteractor(workspace);
+                interactor.Exec();
+            }
+            else if (actionName == "ToggleSortByDateTime")
+            {
+                var interactor = new ToggleSortByDateTimeInteractor(workspace);
+                interactor.Exec();
+            }
+            else if (actionName == "ToggleSortByCategory")
+            {
+                var interactor = new ToggleSortByCategoryInteractor(workspace);
+                interactor.Exec();
+            }
+            else if (actionName == "SetSortNone")
+            {
+                var interactor = new SetSortNoneInterator(workspace);
+                interactor.Exec();
+            }
         }
 
         private List<IWorkspaceItem> GetSelectedWorkspaceItems()

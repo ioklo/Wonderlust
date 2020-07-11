@@ -54,7 +54,32 @@
                 <b:InvokeCommandAction Command="{Binding ExecActionCmd}" 
                                        CommandParameter="View" />
             </misc:KeyTriggerEx>
-            
+
+            <misc:KeyTriggerEx Modifiers="Alt" Key="C">
+                <b:InvokeCommandAction Command="{Binding ExecActionCmd}" 
+                                       CommandParameter="ToggleSortByCategory" />
+            </misc:KeyTriggerEx>
+
+            <misc:KeyTriggerEx Modifiers="Alt" Key="N">
+                <b:InvokeCommandAction Command="{Binding ExecActionCmd}" 
+                                       CommandParameter="ToggleSortByName" />
+            </misc:KeyTriggerEx>
+
+            <misc:KeyTriggerEx Modifiers="Alt" Key="T">
+                <b:InvokeCommandAction Command="{Binding ExecActionCmd}" 
+                                       CommandParameter="ToggleSortByDateTime" />
+            </misc:KeyTriggerEx>
+
+            <misc:KeyTriggerEx Modifiers="Alt" Key="S">
+                <b:InvokeCommandAction Command="{Binding ExecActionCmd}" 
+                                       CommandParameter="ToggleSortBySize" />
+            </misc:KeyTriggerEx>
+
+            <misc:KeyTriggerEx Modifiers="Alt+Shift" Key="N">
+                <b:InvokeCommandAction Command="{Binding ExecActionCmd}" 
+                                       CommandParameter="SetSortNone" />
+            </misc:KeyTriggerEx>
+
             <misc:KeyTriggerEx Modifiers="Alt" Key="Return">
                 <b:InvokeCommandAction Command="{Binding ShowPropertiesCmd}" />
             </misc:KeyTriggerEx>

@@ -22,6 +22,7 @@ namespace Wonderlust.App
             var workspaceItemFactory = new WorkspaceItemFactory(categoryFactory);
             var workspace = new Workspace(workspaceItemFactory);
 
+            workspace.SetSortOrder(EWorkspaceItemSortOrder.CategoryAscending);
             workspace.SetContainer(driveContainer, true);
             workspace.History.Add();
 

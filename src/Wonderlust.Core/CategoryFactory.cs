@@ -11,11 +11,11 @@ namespace Wonderlust.Core
         // TODO: Configurable
         public CategoryFactory()
         {
-            DirectoryCategory = new Category("Directory", Color.FromArgb(251, 83, 83));
-            executableCategory = new Category("Executable", Color.FromArgb(83, 251, 83));
-            defaultCategory = new Category("Default", Color.FromArgb(167, 167, 167));
-            hiddenCategory = new Category("Hidden", Color.FromArgb(167, 0, 167));
-            pictureCategory = new Category("Picture", Color.FromArgb(0, 167, 0));
+            DirectoryCategory = new Category(0, 0, "Directory", Color.FromArgb(251, 83, 83));
+            executableCategory = new Category(100, 0, "Executable", Color.FromArgb(83, 251, 83));
+            defaultCategory = new Category(1000, 0, "Default", Color.FromArgb(167, 167, 167));
+            hiddenCategory = new Category(200, 0, "Hidden", Color.FromArgb(167, 0, 167));
+            pictureCategory = new Category(300, 0, "Picture", Color.FromArgb(0, 167, 0));
         }
 
         public Category DirectoryCategory { get; }
